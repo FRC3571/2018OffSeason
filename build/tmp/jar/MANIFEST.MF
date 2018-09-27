@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Robot-Class: ca.team3571.offseason.Robot
+Main-Class: edu.wpi.first.wpilibj.RobotBase
+

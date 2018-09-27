@@ -1,0 +1,82 @@
+package ca.team3571.offseason.commands;
+
+import ca.team3571.offseason.Robot;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+/**
+ * Drive the given distance straight (negative values go backwards). Uses a
+ * local PID controller to run a simple PID loop that is only enabled while this
+ * command is running. The input is the averaged values of the left and right
+ * encoders.
+ */
+public class DriveStraightDistance extends Command {
+    private double speed;
+    private double targetDistance;
+
+    public DriveStraightDistance(double distance) {
+        requires(Robot.getInstance().getDrive());
+        this.targetDistance = distance;
+
+		/*m_pid = new PIDController(4, 0, 0, new PIDSource() {
+			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
+
+			@Override
+			public double pidGet() {
+				return Robot.m_drivetrain.getDistance();
+			}
+
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {
+				m_sourceType = pidSource;
+			}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return m_sourceType;
+			}
+		}, d -> Robot.m_drivetrain.drive(speed*d, speed*d));
+
+		m_pid.setAbsoluteTolerance(0.01);
+		m_pid.setSetpoint(distance);*/
+    }
+
+    public DriveStraightDistance(double distance, double speed) {
+        this(distance);
+        this.speed = speed;
+    }
+
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+        // Get everything in a safe starting state.
+        Robot.getInstance().getDrive().reset();
+        //m_pid.reset();
+        //m_pid.enable();
+        this.speed = SmartDashboard.getNumber("AutoSpeed", 0.75);
+        //drive
+        Robot.getInstance().getDrive().drive(speed, speed);
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        double distance = Math.abs(Robot.getInstance().getDrive().getDistance());
+        if(distance>=targetDistance)
+            return true;
+        return false;
+
+        /*m_pid.onTarget()*/
+    }
+
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+        // Stop PID and the wheels
+        //m_pid.disable();
+        Robot.getInstance().getDrive().reset();
+        Robot.getInstance().getDrive().drive(0, 0);
+    }
+}
+
