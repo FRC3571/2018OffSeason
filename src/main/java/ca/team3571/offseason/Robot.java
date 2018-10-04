@@ -8,12 +8,15 @@
 package ca.team3571.offseason;
 
 import ca.team3571.offseason.auto.AutonomousExecutor;
+import ca.team3571.offseason.commands.auto.PracticeAuto;
 import ca.team3571.offseason.subsystem.DriveTrain;
 import ca.team3571.offseason.util.RioDuino;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -96,7 +99,7 @@ public class Robot extends IterativeRobot
      */
     @Override
     public void autonomousPeriodic() {
-
+        new PracticeAuto().start();
     }
 
     /**

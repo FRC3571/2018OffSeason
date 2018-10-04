@@ -1,0 +1,8 @@
+.floo
+.flooignore
+.gradle
+out
+build
+*.iml
+*.ipr
+*.iws

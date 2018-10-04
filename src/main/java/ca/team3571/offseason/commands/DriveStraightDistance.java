@@ -18,28 +18,6 @@ public class DriveStraightDistance extends Command {
     public DriveStraightDistance(double distance) {
         requires(Robot.getInstance().getDrive());
         this.targetDistance = distance;
-
-		/*m_pid = new PIDController(4, 0, 0, new PIDSource() {
-			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
-
-			@Override
-			public double pidGet() {
-				return Robot.m_drivetrain.getDistance();
-			}
-
-			@Override
-			public void setPIDSourceType(PIDSourceType pidSource) {
-				m_sourceType = pidSource;
-			}
-
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				return m_sourceType;
-			}
-		}, d -> Robot.m_drivetrain.drive(speed*d, speed*d));
-
-		m_pid.setAbsoluteTolerance(0.01);
-		m_pid.setSetpoint(distance);*/
     }
 
     public DriveStraightDistance(double distance, double speed) {

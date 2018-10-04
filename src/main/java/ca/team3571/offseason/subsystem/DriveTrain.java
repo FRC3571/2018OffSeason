@@ -127,6 +127,7 @@ public class DriveTrain extends Subsystem implements Loggable, Refreshable {
      *            Speed in range [-1,1]
      */
     public void drive(double left, double right) {
+        System.out.println(getDistance());
         drive.tankDrive(left, right);
     }
 
