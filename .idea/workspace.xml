@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5ac380f1-d6f8-493b-85ae-922f84179c61" name="Default" comment="added practice auto">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ca/team3571/offseason/commands/auto/PracticeAuto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="5ac380f1-d6f8-493b-85ae-922f84179c61" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/team3571/offseason/Robot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/team3571/offseason/Robot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/team3571/offseason/commands/DriveStraightDistance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/team3571/offseason/commands/DriveStraightDistance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/team3571/offseason/commands/TurnWithDegrees.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/team3571/offseason/commands/TurnWithDegrees.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/team3571/offseason/subsystem/DriveTrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/team3571/offseason/subsystem/DriveTrain.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -902,12 +896,18 @@
       <option name="project" value="LOCAL" />
       <updated>1538681796547</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added practice auto">
+      <created>1538684471776</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1538684471776</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -916,7 +916,7 @@
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.41335455" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3290938" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3290938" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Floobits" order="8" weight="0.3290938" />
       <window_info anchor="bottom" id="Terminal" order="7" />
@@ -975,7 +975,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added turn auto" />
-    <option name="LAST_COMMIT_MESSAGE" value="added turn auto" />
+    <MESSAGE value="added practice auto" />
+    <option name="LAST_COMMIT_MESSAGE" value="added practice auto" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/ca/team3571/offseason/model/RobotMap.java" />
