@@ -40,9 +40,12 @@ public class DriveStraightDistance extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
+        System.out.println("Im checking!");
         double distance = Math.abs(Robot.getInstance().getDrive().getDistance());
-        if(distance>=targetDistance)
+        if(distance>=targetDistance) {
+            System.out.println("done!");
             return true;
+        }
         return false;
 
         /*m_pid.onTarget()*/

@@ -7,6 +7,7 @@ import ca.team3571.offseason.util.XboxController;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem implements Loggable, Refreshable {
 
@@ -115,7 +116,7 @@ public class DriveTrain extends Subsystem implements Loggable, Refreshable {
      */
     @Override
     public void log() {
-        
+        SmartDashboard.putString("distance", String.valueOf(getDistance()));
     }
 
     /**

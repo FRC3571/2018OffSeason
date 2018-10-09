@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -83,15 +85,16 @@ public class Robot extends IterativeRobot
      */
     @Override
     public void autonomousInit() {
-        boolean signalReceived = false;
-        String signal = null;
-        while(!signalReceived) {
-            signal = DriverStation.getInstance().getGameSpecificMessage();
-            if(signal.length()==AutonomousExecutor.SIGNAL_LENGTH) {
-                signalReceived = true;
-            }
-        }
-        new AutonomousExecutor().accept(signal);
+//        boolean signalReceived = false;
+//        String signal = null;
+//        while(!signalReceived) {
+//            signal = DriverStation.getInstance().getGameSpecificMessage();
+//            if(signal.length()==AutonomousExecutor.SIGNAL_LENGTH) {
+//                signalReceived = true;
+//            }
+//        }
+//        new AutonomousExecutor().accept(signal);
+        new PracticeAuto().start();
     }
 
     /**
@@ -99,7 +102,7 @@ public class Robot extends IterativeRobot
      */
     @Override
     public void autonomousPeriodic() {
-        new PracticeAuto().start();
+        Scheduler.getInstance().run(); //dont delete this u idiot
     }
 
     /**
@@ -109,6 +112,7 @@ public class Robot extends IterativeRobot
     @Override
     public void teleopPeriodic() {
         driveTrain.refresh();
+        debug();
     }
 
     /**
@@ -144,6 +148,10 @@ public class Robot extends IterativeRobot
         camera.setFPS(20);
     }
 
+    private void debug() {
+        driveTrain.log();
+    }
+
     public void log(Level logLevel, String message) {
         logger.log(logLevel, message);
     }
@@ -152,4 +160,5 @@ public class Robot extends IterativeRobot
     public DriveTrain getDrive() {
         return driveTrain;
     }
+
 }
