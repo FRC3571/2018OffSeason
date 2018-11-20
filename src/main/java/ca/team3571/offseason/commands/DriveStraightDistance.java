@@ -32,7 +32,7 @@ public class DriveStraightDistance extends Command {
         Robot.getInstance().getDrive().reset();
         //m_pid.reset();
         //m_pid.enable();
-        this.speed = SmartDashboard.getNumber("AutoSpeed", 0.75);
+        //this.speed = SmartDashboard.getNumber("AutoSpeed", 0.75);
         //drive
         Robot.getInstance().getDrive().drive(speed, speed);
     }
