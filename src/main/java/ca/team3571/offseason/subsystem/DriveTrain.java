@@ -129,7 +129,8 @@ public class DriveTrain extends Subsystem implements Loggable, Refreshable {
      */
     public void drive(double left, double right) {
         System.out.println(getDistance());
-        drive.tankDrive(left, right);
+        //drive.tankDrive(left, right); //tank drive
+        drive.arcadeDrive(left,right);  //arcade drive
     }
 
     /**
@@ -139,7 +140,8 @@ public class DriveTrain extends Subsystem implements Loggable, Refreshable {
      */
     public void drive(XboxController xbox) {
         //drive(-xbox.getY(GenericHID.Hand.kLeft), xbox.getY(GenericHID.Hand.kRight));
-        drive(-xbox.LeftStick.Y, -xbox.RightStick.Y);
+        //drive(-xbox.LeftStick.Y, -xbox.RightStick.Y); //tank drive
+        drive(-xbox.RightStick.Y, -xbox.RightStick.X); //arcade drive
     }
 
     /**

@@ -1,12 +1,15 @@
 package ca.team3571.offseason.commands.auto;
 
 import ca.team3571.offseason.commands.DriveStraightDistance;
+import ca.team3571.offseason.commands.TurnWithDegrees;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class PracticeAuto extends CommandGroup {
 
     public PracticeAuto() {
+
         addSequential(new DriveStraightDistance(100, 0.5));
+
     }
 
     @Override

@@ -9,6 +9,8 @@ package ca.team3571.offseason;
 
 import ca.team3571.offseason.auto.AutonomousExecutor;
 import ca.team3571.offseason.commands.auto.PracticeAuto;
+import ca.team3571.offseason.component.CameraController;
+import ca.team3571.offseason.component.RobotCamera;
 import ca.team3571.offseason.subsystem.DriveTrain;
 import ca.team3571.offseason.util.RioDuino;
 import edu.wpi.cscore.UsbCamera;
@@ -38,6 +40,7 @@ public class Robot extends IterativeRobot
     private DriveTrain driveTrain;
     private Logger logger;
     private RioDuino rioDuino;
+    private CameraController cameraController;
     private static Robot exposedInstance;
 
     /**
@@ -139,13 +142,13 @@ public class Robot extends IterativeRobot
     }
 
     private void runCamera() {
-        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-
-        camera.setResolution(640, 480);
-
+        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
+        UsbCamera secondCamera = CameraServer.getInstance().startAutomaticCapture(1);
+        camera.setWhiteBalanceAuto();
         camera.setWhiteBalanceAuto();
 
-        camera.setFPS(20);
+        cameraController = new CameraController(new RobotCamera(camera), new RobotCamera(secondCamera));
+        cameraController.begin();
     }
 
     private void debug() {
