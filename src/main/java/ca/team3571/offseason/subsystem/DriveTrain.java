@@ -5,11 +5,12 @@ import ca.team3571.offseason.util.Loggable;
 import ca.team3571.offseason.util.RobotMath;
 import ca.team3571.offseason.util.XboxController;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveTrain extends Subsystem implements Loggable, Refreshable {
+public class DriveTrain extends PIDSubsystem implements Loggable, Refreshable {
 
     //motor ports
     private static int FRONT_LEFT_DRIVE_MOTOR, MIDDLE_LEFT_DRIVE_MOTOR,
@@ -75,6 +76,10 @@ public class DriveTrain extends Subsystem implements Loggable, Refreshable {
     //driver controller
     private XboxController controller;
 
+    private float error;
+
+
+    private float lastSpeed;
 
     @Override
     protected void initDefaultCommand() {
@@ -84,7 +89,7 @@ public class DriveTrain extends Subsystem implements Loggable, Refreshable {
 
 
     public DriveTrain() {
-        super();
+        super("DriveTrain", 2.0, 0,0);
 
         //initialize hardware
         frontLeft = new Spark(FRONT_LEFT_DRIVE_MOTOR);
@@ -128,6 +133,7 @@ public class DriveTrain extends Subsystem implements Loggable, Refreshable {
      *            Speed in range [-1,1]
      */
     public void drive(double left, double right) {
+        lastSpeed = (float) right;
         System.out.println(getDistance());
         //drive.tankDrive(left, right); //tank drive
         drive.arcadeDrive(left,right);  //arcade drive
@@ -188,5 +194,27 @@ public class DriveTrain extends Subsystem implements Loggable, Refreshable {
     public void refresh() {
         controller.refresh();
         drive(controller);
+    }
+
+    @Override
+    protected double returnPIDInput() {
+        return (rightEncoder.getDistance() - leftEncoder.getDistance());
+    }
+
+    @Override
+    protected void usePIDOutput(double output) {
+        if(output > 0) {
+            //too much
+            lastSpeed += 0.01;
+            drive.tankDrive(lastSpeed, lastSpeed);
+
+        }
+        else if(output < 0) {
+            lastSpeed -= 0.01;
+            drive.tankDrive(lastSpeed, lastSpeed);
+            //too little
+        }
+        //debug output
+        System.out.println("OUTPUT -> " + output);
     }
 }
