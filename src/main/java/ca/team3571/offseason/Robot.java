@@ -12,7 +12,11 @@ import ca.team3571.offseason.commands.auto.PracticeAuto;
 import ca.team3571.offseason.component.CameraController;
 import ca.team3571.offseason.component.RobotCamera;
 import ca.team3571.offseason.subsystem.DriveTrain;
+import ca.team3571.offseason.subsystem.Intake;
+import ca.team3571.offseason.subsystem.Tilt;
+import ca.team3571.offseason.subsystem.elevator.Elevator;
 import ca.team3571.offseason.util.RioDuino;
+import ca.team3571.offseason.util.XboxController;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -38,9 +42,13 @@ public class Robot extends IterativeRobot
 {
 
     private DriveTrain driveTrain;
+    private Elevator elevator;
+    private Intake intake;
+    private Tilt tilt;
     private Logger logger;
     private RioDuino rioDuino;
     private CameraController cameraController;
+    private XboxController subsystemController = new XboxController(1);
     private static Robot exposedInstance;
 
     /**
@@ -54,6 +62,10 @@ public class Robot extends IterativeRobot
         return exposedInstance;
     }
 
+    public XboxController getSubsystemController() {
+        return subsystemController;
+    }
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -62,6 +74,9 @@ public class Robot extends IterativeRobot
     public void robotInit() {
         //initialize subsystems
         driveTrain = new DriveTrain();
+        elevator = new Elevator();
+        intake = new Intake();
+        tilt = new Tilt();
 
         //logger
         logger = Logger.getLogger(getClass().getName());
@@ -115,6 +130,9 @@ public class Robot extends IterativeRobot
     @Override
     public void teleopPeriodic() {
         driveTrain.refresh();
+        elevator.refresh();
+        intake.refresh();
+        tilt.refresh();
         debug();
     }
 
@@ -142,17 +160,26 @@ public class Robot extends IterativeRobot
     }
 
     private void runCamera() {
-        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
-        UsbCamera secondCamera = CameraServer.getInstance().startAutomaticCapture(1);
-        camera.setWhiteBalanceAuto();
-        camera.setWhiteBalanceAuto();
+        UsbCamera cameraOne = CameraServer.getInstance().startAutomaticCapture(0);
+        UsbCamera cameraTwo = CameraServer.getInstance().startAutomaticCapture(1);
+        //UsbCamera cameraThree = CameraServer.getInstance().startAutomaticCapture(2);
+        cameraOne.setWhiteBalanceAuto();
+        cameraTwo.setWhiteBalanceAuto();
+        //cameraThree.setWhiteBalanceAuto();
 
-        cameraController = new CameraController(new RobotCamera(camera), new RobotCamera(secondCamera));
+        cameraController = new CameraController();//new RobotCamera(cameraOne), new RobotCamera(cameraTwo));
+        cameraController.addCamera(new RobotCamera(cameraOne));
+        cameraController.addCamera(new RobotCamera(cameraTwo));
+        //cameraController.addCamera(new RobotCamera(cameraThree));
         cameraController.begin();
+        cameraController.setPriority(0);
     }
 
     private void debug() {
         driveTrain.log();
+        elevator.log();
+        intake.log();
+        tilt.log();
     }
 
     public void log(Level logLevel, String message) {
