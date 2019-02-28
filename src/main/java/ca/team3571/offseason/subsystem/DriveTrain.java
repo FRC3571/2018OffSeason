@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveTrain extends PIDSubsystem implements Loggable, Refreshable {
 
     //motor ports
-    private static int FRONT_LEFT_DRIVE_MOTOR, MIDDLE_LEFT_DRIVE_MOTOR,
-            FRONT_RIGHT_DRIVE_MOTOR, MIDDLE_RIGHT_DRIVE_MOTOR;
+    private static int LEFT_MOTOR_GROUP, RIGHT_MOTOR_GROUP;
     //encoder ports/channels
     private static int FRONT_LEFT_ENCODER_CHANNEL_A,
     FRONT_LEFT_ENCODER_CHANNEL_B,
@@ -37,15 +36,13 @@ public class DriveTrain extends PIDSubsystem implements Loggable, Refreshable {
 
     static {
         //initialization
-        FRONT_LEFT_DRIVE_MOTOR = 0;
-        MIDDLE_LEFT_DRIVE_MOTOR = 1;
-        FRONT_RIGHT_DRIVE_MOTOR = 2;
-        MIDDLE_RIGHT_DRIVE_MOTOR = 3;
+        LEFT_MOTOR_GROUP = 0;
+        RIGHT_MOTOR_GROUP = 1;
 
-        FRONT_LEFT_ENCODER_CHANNEL_A = 0;
-        FRONT_LEFT_ENCODER_CHANNEL_B = 1;
-        FRONT_RIGHT_ENCODER_CHANNEL_A = 2;
-        FRONT_RIGHT_ENCODER_CHANNEL_B = 3;
+        FRONT_LEFT_ENCODER_CHANNEL_A = 2;
+        FRONT_LEFT_ENCODER_CHANNEL_B = 3;
+        FRONT_RIGHT_ENCODER_CHANNEL_A = 4;
+        FRONT_RIGHT_ENCODER_CHANNEL_B = 5;
 
         FORWARD_DIRECTION = false;
         REVERSE_DIRECTION = true;
@@ -61,13 +58,9 @@ public class DriveTrain extends PIDSubsystem implements Loggable, Refreshable {
 
 
     //left
-    private Spark frontLeft;
-    private Spark midLeft;
-    private SpeedControllerGroup leftController;
+    private Spark left;
     //right
-    private Spark frontRight;
-    private Spark midRight;
-    private SpeedControllerGroup rightController;
+    private Spark right;
     //underlying mechanism
     private DifferentialDrive drive;
     //distance encoders
@@ -92,23 +85,15 @@ public class DriveTrain extends PIDSubsystem implements Loggable, Refreshable {
         super("DriveTrain", 2.0, 0,0);
 
         //initialize hardware
-        frontLeft = new Spark(FRONT_LEFT_DRIVE_MOTOR);
-        midLeft = new Spark(MIDDLE_LEFT_DRIVE_MOTOR);
+        right = new Spark(RIGHT_MOTOR_GROUP);
+        left = new Spark(LEFT_MOTOR_GROUP);
 
-        leftController = new SpeedControllerGroup(frontLeft, midLeft);
-
-        frontRight = new Spark(FRONT_RIGHT_DRIVE_MOTOR);
-        midRight = new Spark(MIDDLE_RIGHT_DRIVE_MOTOR);
-
-        rightController = new SpeedControllerGroup(frontRight, midRight);
-
-        drive = new DifferentialDrive(leftController, rightController);
+        drive = new DifferentialDrive(right, left);
 
         initializeEncoders();
 
-        //Middle motor may need to travel in opposite direction to others based on gearbox design
-        midLeft.setInverted(true);
-        midRight.setInverted(true);
+        left.setInverted(false);
+        right.setInverted(false);
 
         drive(0, 0);
         drive.setSafetyEnabled(false);
@@ -134,7 +119,6 @@ public class DriveTrain extends PIDSubsystem implements Loggable, Refreshable {
      */
     public void drive(double left, double right) {
         lastSpeed = (float) right;
-        System.out.println(getDistance());
         //drive.tankDrive(left, right); //tank drive
         drive.arcadeDrive(left,right);  //arcade drive
     }

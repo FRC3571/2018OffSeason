@@ -8,13 +8,13 @@
 package ca.team3571.offseason;
 
 import ca.team3571.offseason.auto.AutonomousExecutor;
+import ca.team3571.offseason.commands.ClimbCommand;
 import ca.team3571.offseason.commands.auto.PracticeAuto;
 import ca.team3571.offseason.component.CameraController;
 import ca.team3571.offseason.component.RobotCamera;
-import ca.team3571.offseason.subsystem.DriveTrain;
-import ca.team3571.offseason.subsystem.Intake;
-import ca.team3571.offseason.subsystem.Tilt;
+import ca.team3571.offseason.subsystem.*;
 import ca.team3571.offseason.subsystem.elevator.Elevator;
+import ca.team3571.offseason.subsystem.elevator.LiftCommand;
 import ca.team3571.offseason.util.RioDuino;
 import ca.team3571.offseason.util.XboxController;
 import edu.wpi.cscore.UsbCamera;
@@ -45,6 +45,7 @@ public class Robot extends IterativeRobot
     private Elevator elevator;
     private Intake intake;
     private Tilt tilt;
+    private Pneumatics pneumatics;
     private Logger logger;
     private RioDuino rioDuino;
     private CameraController cameraController;
@@ -72,11 +73,15 @@ public class Robot extends IterativeRobot
      */
     @Override
     public void robotInit() {
+        //set reference for exposed instance
+        exposedInstance = this;
+
         //initialize subsystems
+       // pneumatics = new Pneumatics();
         driveTrain = new DriveTrain();
         elevator = new Elevator();
-        intake = new Intake();
-        tilt = new Tilt();
+      //  intake = new Intake();
+      //  tilt = new Tilt();
 
         //logger
         logger = Logger.getLogger(getClass().getName());
@@ -84,10 +89,8 @@ public class Robot extends IterativeRobot
         //rio
         rioDuino = new RioDuino();
 
-        //set reference for exposed instance
-        exposedInstance = this;
-
         runCamera();
+        initController();
     }
 
     /**
@@ -131,8 +134,10 @@ public class Robot extends IterativeRobot
     public void teleopPeriodic() {
         driveTrain.refresh();
         elevator.refresh();
-        intake.refresh();
-        tilt.refresh();
+        subsystemController.refresh();
+        Scheduler.getInstance().run();
+       // intake.refresh();
+        //tilt.refresh();
         debug();
     }
 
@@ -178,8 +183,8 @@ public class Robot extends IterativeRobot
     private void debug() {
         driveTrain.log();
         elevator.log();
-        intake.log();
-        tilt.log();
+        //intake.log();
+        //tilt.log();
     }
 
     public void log(Level logLevel, String message) {
@@ -189,6 +194,29 @@ public class Robot extends IterativeRobot
     //getters
     public DriveTrain getDrive() {
         return driveTrain;
+    }
+
+    public Pneumatics getPneumatics() {
+        return pneumatics;
+    }
+
+    public Intake getIntake() {
+        return intake;
+    }
+
+    public Tilt getTilt() {
+        return tilt;
+    }
+
+    public Elevator getElevator() {
+        return elevator;
+    }
+
+    private void initController() {
+     //   subsystemController.Buttons.Y.runCommand(new ClimbCommand(), XboxController.CommandState.WhenPressed);
+        subsystemController.Buttons.LB.runCommand(new LiftCommand(true), XboxController.CommandState.WhenPressed);
+        subsystemController.Buttons.RB.runCommand(new LiftCommand(false), XboxController.CommandState.WhenPressed);
+
     }
 
 }
