@@ -79,11 +79,11 @@ public class Robot extends IterativeRobot
         exposedInstance = this;
 
         //initialize subsystems
-       // pneumatics = new Pneumatics();
+        pneumatics = new Pneumatics();
         driveTrain = new DriveTrain();
         elevator = new Elevator();
         intake = new Intake();
-      //  tilt = new Tilt();
+        tilt = new Tilt();
 
         //logger
         logger = Logger.getLogger(getClass().getName());
@@ -137,9 +137,9 @@ public class Robot extends IterativeRobot
         driveTrain.refresh();
         elevator.refresh();
         intake.refresh();
+        tilt.refresh();
         subsystemController.refresh();
         Scheduler.getInstance().run();
-        //tilt.refresh();
         debug();
     }
 
@@ -186,7 +186,7 @@ public class Robot extends IterativeRobot
         driveTrain.log();
         elevator.log();
         intake.log();
-        //tilt.log();
+        tilt.log();
     }
 
     public void log(Level logLevel, String message) {

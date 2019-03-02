@@ -1,5 +1,6 @@
 package ca.team3571.offseason.subsystem;
 
+import ca.team3571.offseason.Robot;
 import ca.team3571.offseason.util.Loggable;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
@@ -11,7 +12,7 @@ public class Tilt extends Subsystem implements Loggable, Refreshable {
     private static int ENCODER_CHANNEL_A;
     private static int ENCODER_CHANNEL_B;
 
-    private static int MOTOR_PORT;
+    private static int MOTOR_PORT = 5;
 
     private boolean isReverse = false;
 
@@ -25,7 +26,8 @@ public class Tilt extends Subsystem implements Loggable, Refreshable {
 
     @Override
     public void refresh() {
-        //do real-time calculation && movements here
+        //TODO do real-time calculation && movements here
+        motor.setSpeed(Robot.getInstance().getSubsystemController().RightStick.Y);
     }
 
     @Override
