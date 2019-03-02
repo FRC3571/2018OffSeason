@@ -17,6 +17,7 @@ public class Pneumatics extends Subsystem {
     boolean SHIFTSTATE;
 
     private boolean openState;
+    private boolean intakeOpenState;
 
 
 
@@ -158,6 +159,12 @@ public class Pneumatics extends Subsystem {
 
     public void setOpenState(boolean openState) {
         this.openState = openState;
+    }
+
+    public boolean getIntakeOpenState() {return intakeOpenState;}
+
+    public void setIntakeOpenState(boolean intakeOpenState) {
+        this.intakeOpenState = intakeOpenState;
     }
 
 }

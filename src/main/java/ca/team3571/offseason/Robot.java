@@ -10,6 +10,7 @@ package ca.team3571.offseason;
 import ca.team3571.offseason.auto.AutonomousExecutor;
 import ca.team3571.offseason.commands.ClimbCommand;
 import ca.team3571.offseason.commands.LiftManualCommand;
+import ca.team3571.offseason.commands.OpenCloseCommand;
 import ca.team3571.offseason.commands.auto.PracticeAuto;
 import ca.team3571.offseason.component.CameraController;
 import ca.team3571.offseason.component.RobotCamera;
@@ -215,6 +216,7 @@ public class Robot extends IterativeRobot
 
     private void initController() {
         subsystemController.Buttons.Y.runCommand(new ClimbCommand(), XboxController.CommandState.WhenPressed);
+        subsystemController.Buttons.A.runCommand(new OpenCloseCommand(), XboxController.CommandState.WhenPressed);
         subsystemController.Buttons.LB.runCommand(new LiftManualCommand(true), XboxController.CommandState.WhilePressed);
         subsystemController.Buttons.RB.runCommand(new LiftManualCommand(false), XboxController.CommandState.WhilePressed);
     }
