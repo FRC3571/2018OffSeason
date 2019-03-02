@@ -9,6 +9,7 @@ package ca.team3571.offseason;
 
 import ca.team3571.offseason.auto.AutonomousExecutor;
 import ca.team3571.offseason.commands.ClimbCommand;
+import ca.team3571.offseason.commands.LiftManualCommand;
 import ca.team3571.offseason.commands.auto.PracticeAuto;
 import ca.team3571.offseason.component.CameraController;
 import ca.team3571.offseason.component.RobotCamera;
@@ -80,7 +81,7 @@ public class Robot extends IterativeRobot
        // pneumatics = new Pneumatics();
         driveTrain = new DriveTrain();
         elevator = new Elevator();
-      //  intake = new Intake();
+        intake = new Intake();
       //  tilt = new Tilt();
 
         //logger
@@ -134,9 +135,9 @@ public class Robot extends IterativeRobot
     public void teleopPeriodic() {
         driveTrain.refresh();
         elevator.refresh();
+        intake.refresh();
         subsystemController.refresh();
         Scheduler.getInstance().run();
-       // intake.refresh();
         //tilt.refresh();
         debug();
     }
@@ -183,7 +184,7 @@ public class Robot extends IterativeRobot
     private void debug() {
         driveTrain.log();
         elevator.log();
-        //intake.log();
+        intake.log();
         //tilt.log();
     }
 
@@ -213,10 +214,9 @@ public class Robot extends IterativeRobot
     }
 
     private void initController() {
-     //   subsystemController.Buttons.Y.runCommand(new ClimbCommand(), XboxController.CommandState.WhenPressed);
-        subsystemController.Buttons.LB.runCommand(new LiftCommand(true), XboxController.CommandState.WhenPressed);
-        subsystemController.Buttons.RB.runCommand(new LiftCommand(false), XboxController.CommandState.WhenPressed);
-
+        subsystemController.Buttons.Y.runCommand(new ClimbCommand(), XboxController.CommandState.WhenPressed);
+        subsystemController.Buttons.LB.runCommand(new LiftManualCommand(true), XboxController.CommandState.WhilePressed);
+        subsystemController.Buttons.RB.runCommand(new LiftManualCommand(false), XboxController.CommandState.WhilePressed);
     }
 
 }
